@@ -1,0 +1,33 @@
+[tools]
+go = "1.27.1"
+node = "26.9.0"
+"go:github.com/a-h/templ/cmd/templ" = "v0.3.1001"
+"aqua:air-verse/air" = "1.67.4"
+"aqua:tailwindlabs/tailwindcss" = "4.3.3"
+
+[settings]
+quiet = true
+
+[tasks.generate]
+description = "Regenerate templ components"
+run = "templ generate"
+
+[tasks.css]
+description = "Build the tailwind stylesheet once"
+run = "tailwindcss -i web/input.css -o web/static/main.css --minify"
+
+[tasks.build]
+description = "Generate templ, build css, and build the dashboard binary"
+run = ["templ generate", "tailwindcss -i web/input.css -o web/static/main.css --minify", "go build -o tmp/bin/dashboard ./cmd/dashboard"]
+
+[tasks.test]
+description = "Run all Go tests"
+run = ["templ generate", "go test ./..."]
+
+[tasks.vet]
+description = "Generate templ, tidy, vet, and test"
+run = ["templ generate", "go mod tidy", "go vet ./...", "go test ./..."]
+
+[tasks.dev]
+description = "Run with air hot reload (templ + tailwind + go rebuilt on change)"
+run = "air"

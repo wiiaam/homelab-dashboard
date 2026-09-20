@@ -1,0 +1,11 @@
+# Build artifacts
+tmp/
+
+# Generated stylesheet (rebuild with `mise run css` or dev workflow)
+web/static/main.css
+
+# Local overrides
+.mise.local.toml
+
+# Logs
+*.log

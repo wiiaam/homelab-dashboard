@@ -1,0 +1,22 @@
+package components
+
+import "github.com/wiiaam/homelab-dashboard/internal/models"
+
+// MetricsFragment updates an existing #metrics-<ns>-<name> span in place.
+templ MetricsFragment(v TileView) {
+	<span id={ MetricsID(v.Service) } hx-swap-oob="true">{ metricsText(v) }</span>
+}
+
+// RouteRemoveFragment deletes a service tile by id.
+templ RouteRemoveFragment(s models.Service) {
+	<div id={ TileID(s) } hx-swap-oob="delete"></div>
+}
+
+// TileInsert positions a new tile in the grid. For non-outerHTML hx-swap-oob
+// styles htmx strips the encapsulating tag, so the swap directive lives on a
+// throwaway div and the tile box itself is inserted whole.
+templ TileInsert(v TileView, oob string) {
+	<div hx-swap-oob={ oob }>
+		@Tile(v, "")
+	</div>
+}
